@@ -3,15 +3,23 @@
 #include <SoftwareSerial.h>
 #include <Arduino_FreeRTOS.h>
 
+//Setup RX dan TX pin modul DFPlayer
 //Setup SoftwareSerial  RX pin 5, TX pin 6
 SoftwareSerial serial(5, 6);
 
+//Setup deklarasi pin
+//1.Setup Ultasonic pin trigPin & echoPin
 #define trigPin 9
 #define echoPin 10
+//2.Setup Trafficlight pin
 #define redLed 2
 #define yellowLed 3
 #define greenLed 4
+//3.Setup Sound pin
 #define buzzer 5
+
+//Deklarasi tipedata
+float duration, distance;
 
 //Task Trafficlight
 static void task1(void *pvParameters) {
@@ -39,9 +47,27 @@ static void task1(void *pvParameters) {
   }
 }
 
+//Task Ultrasonic Sensor (HC SR04)
+static void task2(void *pvParameters) {
+  for (;;) {
+    digitalWrite(trigPin, LOW);
+    vTaskDelay(2 / portTICK_PERIOD_MS);
+    digitalWrite(trigPin, HIGH);
+    vTaskDelay(10 / portTICK_PERIOD_MS);
+    digitalWrite(trigPin, LOW);
+
+    duration = pulseIn(echoPin, HIGH);
+    distance = (duration*.0343)/2;
+    Serial.print("Distance: ");
+    Serial.println(distance);
+    delay(100);
+
+  }
+}
+
 void setup() {
-  //pinMode(trigPin, OUTPUT);
-  //pinMode(echoPin, INPUT);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
   pinMode(redLed, OUTPUT);
   pinMode(yellowLed, OUTPUT);
   pinMode(greenLed, OUTPUT);
