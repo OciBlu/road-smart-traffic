@@ -17,6 +17,7 @@ SoftwareSerial serial(5, 6);
 #define greenLed 4
 //3.Setup Sound pin
 #define buzzer 5
+#define TestLed 7
 
 //Deklarasi tipedata
 float duration, distance;
@@ -67,8 +68,22 @@ static void task2(void *pvParameters) {
   }
 }
 
+//Task Sound Peringatan
+static void task3(void *pvParameters) {
+  for (;;) {
+    if (redLed == HIGH && distance < 20){
+      digitalWrite(TestLed, HIGH);
+    }
+
+    else{
+      digitalWrite(TestLed, LOW);
+    }
+  }
+}
+
 void setup() {
   Serial.begin (9600);
+  pinMode(TestLed, OUTPUT);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(redLed, OUTPUT);
@@ -76,12 +91,13 @@ void setup() {
   pinMode(greenLed, OUTPUT);
   //pinMode(buzzer, OUTPUT);
 
+  /*
   //Setup MP3
-  serial.begin (9600);  
+    
   mp3_set_serial (serial);
   delay(5); 
   mp3_set_volume (20);
-  delay(100);
+  delay(100);*/
 
   //Setup TaskCreate
   //Setup TaskCreate Trafficlight
@@ -95,7 +111,7 @@ void setup() {
     );
 
   
-    //Setup TaskCreate Trafficlight
+  //Setup TaskCreate Ultrasonic Sensor (HC SR04)
   xTaskCreate(
     task2,                    // Function that should be called
     "Task2",                  // Name of the task (for debugging)
@@ -104,6 +120,17 @@ void setup() {
     tskIDLE_PRIORITY + 2,     // Task priority
     NULL                      // Task handle
     );
+
+  //Setup TaskCreate Sound Peringatan
+  xTaskCreate(
+    task3,                    // Function that should be called
+    "Task3",                  // Name of the task (for debugging)
+    configMINIMAL_STACK_SIZE, // Stack size (bytes)
+    NULL,                     // Parameter to pass
+    tskIDLE_PRIORITY + 2,     // Task priority
+    NULL                      // Task handle
+    );
+
   
 
     //Menjalankan Task
