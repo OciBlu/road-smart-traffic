@@ -50,6 +50,7 @@ static void task1(void *pvParameters) {
 //Task Ultrasonic Sensor (HC SR04)
 static void task2(void *pvParameters) {
   for (;;) {
+    
     digitalWrite(trigPin, LOW);
     vTaskDelay(2 / portTICK_PERIOD_MS);
     digitalWrite(trigPin, HIGH);
@@ -57,15 +58,17 @@ static void task2(void *pvParameters) {
     digitalWrite(trigPin, LOW);
 
     duration = pulseIn(echoPin, HIGH);
-    distance = (duration*.0343)/2;
-    Serial.print("Distance: ");
+    distance = (duration*.0343)/2; // Satuan panjang CM
+    
+    Serial.println("Distance: ");
     Serial.println(distance);
-    delay(100);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
 
   }
 }
 
 void setup() {
+  Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(redLed, OUTPUT);
@@ -73,14 +76,15 @@ void setup() {
   pinMode(greenLed, OUTPUT);
   //pinMode(buzzer, OUTPUT);
 
-  /*//Setup MP3
+  //Setup MP3
   serial.begin (9600);  
   mp3_set_serial (serial);
   delay(5); 
   mp3_set_volume (20);
-  delay(1000);*/
+  delay(100);
 
   //Setup TaskCreate
+  //Setup TaskCreate Trafficlight
   xTaskCreate(
     task1,                    // Function that should be called
     "Task1",                  // Name of the task (for debugging)
@@ -90,10 +94,24 @@ void setup() {
     NULL                      // Task handle
     );
 
+  
+    //Setup TaskCreate Trafficlight
+  xTaskCreate(
+    task2,                    // Function that should be called
+    "Task2",                  // Name of the task (for debugging)
+    configMINIMAL_STACK_SIZE, // Stack size (bytes)
+    NULL,                     // Parameter to pass
+    tskIDLE_PRIORITY + 2,     // Task priority
+    NULL                      // Task handle
+    );
+  
+
+    //Menjalankan Task
     vTaskStartScheduler();
 
 }
 
 void loop() {
+  
  
 }
