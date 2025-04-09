@@ -77,9 +77,6 @@ static void task2(void *pvParameters) {
     //Serial.println("Distance: ");
     Serial.println(distance);
     vTaskDelay(100 / portTICK_PERIOD_MS);
-
-    
-
   }
 }
 
