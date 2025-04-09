@@ -99,7 +99,3 @@ void checkViolation() {
     //mp3_stop();
     //delay(1000);
   }
-
-
- 
-}
