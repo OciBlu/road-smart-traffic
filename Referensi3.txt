@@ -18,7 +18,7 @@ SoftwareSerial SoundSerial(5, 6);
 #define greenLed 4
 //3.Setup Sound pin
 #define buzzer 5
-#define TestLed 12
+#define TestLed 7
 
 long duration;
 int distance;
@@ -38,7 +38,7 @@ void setup() {
   SoundSerial.begin (9600);  
   mp3_set_serial (SoundSerial);
   delay(5); 
-  mp3_set_volume (20);
+  mp3_set_volume (15);
   delay(1000);
 
 }
@@ -99,3 +99,4 @@ void checkViolation() {
     //mp3_stop();
     //delay(1000);
   }
+}
