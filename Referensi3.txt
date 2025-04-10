@@ -62,7 +62,7 @@ void loop() {
   digitalWrite(greenLed, LOW);
 
   unsigned long startTime = millis();
-  while (millis() - startTime < 300000) { // selama 10 detik lampu merah
+  while (millis() - startTime < 5000) { // selama 10 detik lampu merah
     checkViolation(); // terus cek pelanggaran
     delay(100); // beri jeda biar gak terlalu sering
   }
