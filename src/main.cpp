@@ -62,7 +62,7 @@ void loop() {
   digitalWrite(greenLed, LOW);
 
   unsigned long startTime = millis();
-  while (millis() - startTime < 10000) { // selama 10 detik lampu merah
+  while (millis() - startTime < 30000) { // selama 10 detik lampu merah
     checkViolation(); // terus cek pelanggara
   }
 
@@ -88,7 +88,7 @@ void checkViolation() {
   //eksekusi ketika melewati batas marka 
    if (distance < 20) {
     digitalWrite(TestLed, HIGH);
-    delay(10000);
+    delay(8000);
   }
   
   else {
