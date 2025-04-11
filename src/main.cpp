@@ -54,7 +54,7 @@ void loop() {
   digitalWrite(redLed, LOW);
   digitalWrite(yellowLed, HIGH);
   digitalWrite(greenLed, LOW);
-  delay(5000);
+  delay(2000);
 
   // LAMPU MERAH
   digitalWrite(redLed, HIGH);
@@ -62,8 +62,8 @@ void loop() {
   digitalWrite(greenLed, LOW);
 
   unsigned long startTime = millis();
-  while (millis() - startTime < 5000) { // selama 10 detik lampu merah
-    checkViolation(); // terus cek pelanggaran
+  while (millis() - startTime < 10000) { // selama 10 detik lampu merah
+    checkViolation(); // terus cek pelanggara
   }
 
   //Mematikan Suara Peringatan setelah lampu merah mati
@@ -88,6 +88,7 @@ void checkViolation() {
   //eksekusi ketika melewati batas marka 
    if (distance < 20) {
     digitalWrite(TestLed, HIGH);
+    delay(10000);
   }
   
   else {
