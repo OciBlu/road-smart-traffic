@@ -18,12 +18,12 @@ SoftwareSerial SoundSerial(5, 6);
 #define greenLed 4
 //3.Setup Sound pin
 #define buzzer 5
-#define TestLed 7
+#define SoundRelay 7
 
 long duration;
 int distance;
 
-void checkViolation();
+//void checkViolation(); //tidak dipakai jika pakai ArduinoIDE
 
 void setup() {
   pinMode(trigPin, OUTPUT);
@@ -32,15 +32,8 @@ void setup() {
   pinMode(yellowLed, OUTPUT);
   pinMode(greenLed, OUTPUT);
   pinMode(buzzer, OUTPUT);
-  pinMode(TestLed,OUTPUT);
+  pinMode(SoundRelay,OUTPUT);
 
-  //Setup MP3
-  /*SoundSerial.begin (9600);  
-  mp3_set_serial (SoundSerial);
-  delay(5); 
-  mp3_set_volume (15);
-  delay(1000);
-  */
 }
 
 void loop() {
@@ -67,7 +60,7 @@ void loop() {
   }
 
   //Mematikan Suara Peringatan setelah lampu merah mati
-  digitalWrite(TestLed, LOW);
+  digitalWrite(SoundRelay, LOW);
 }
 
 void checkViolation() {
@@ -87,11 +80,11 @@ void checkViolation() {
 */
   //eksekusi ketika melewati batas marka 
    if (distance < 20) {
-    digitalWrite(TestLed, HIGH);
+    digitalWrite(SoundRelay, HIGH);
     delay(8000);
   }
   
   else {
-    digitalWrite(TestLed, LOW);
+    digitalWrite(SoundRelay, LOW);
   }
 }
