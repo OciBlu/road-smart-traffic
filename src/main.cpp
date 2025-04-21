@@ -10,8 +10,8 @@ SoftwareSerial SoundSerial(5, 6);
 
 //Setup deklarasi pin
 //1.Setup Ultasonic pin trigPin & echoPin
-#define trigPin 9
-#define echoPin 10
+#define trigPin 10
+#define echoPin 9
 //2.Setup Trafficlight pin
 #define redLed 2
 #define yellowLed 3
@@ -23,9 +23,10 @@ SoftwareSerial SoundSerial(5, 6);
 long duration;
 int distance;
 
-//void checkViolation(); //tidak dipakai jika pakai ArduinoIDE
+void checkViolation(); //tidak dipakai jika pakai ArduinoIDE
 
 void setup() {
+  Serial.begin(9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(redLed, OUTPUT);
@@ -73,11 +74,11 @@ void checkViolation() {
 
   duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
-/*
+
   Serial.print("Jarak: ");
   Serial.print(distance);
   Serial.println(" cm");
-*/
+
   //eksekusi ketika melewati batas marka 
    if (distance < 20) {
     digitalWrite(SoundRelay, HIGH);
