@@ -74,13 +74,13 @@ void checkViolation() {
 
   duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
-
+ 
   Serial.print("Jarak: ");
   Serial.print(distance);
   Serial.println(" cm");
 
   //eksekusi ketika melewati batas marka 
-   if (distance < 20) {
+   if (distance < 20 && distance != 0 ) {
     digitalWrite(SoundRelay, HIGH);
     delay(8000);
   }
